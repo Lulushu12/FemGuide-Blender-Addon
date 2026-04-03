@@ -172,10 +172,9 @@ def build_cylinder_pair(pts, normal, seg_index, offset_along, radius, height, of
 
     anchor = p0 + offset_along * (p1 - p0)
 
-    y_local = seg_vec                                    # cylinder axis
+    y_local = safe_normalize(np.cross(normal, seg_vec))  # cylinder axis: in-plane, perpendicular to segment
+    x_local = seg_vec
     z_local = safe_normalize(normal)
-    x_local = safe_normalize(np.cross(y_local, z_local))
-    z_local = safe_normalize(np.cross(x_local, y_local))
 
     center1 = anchor + normal * offset_from_plane
     center2 = anchor - normal * offset_from_plane
